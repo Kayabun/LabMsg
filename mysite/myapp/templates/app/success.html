@@ -1,0 +1,41 @@
+{% load static %}
+{% load bootstrap4 %}       {# imports bootstrap3 #}
+{% bootstrap_css %}         {# Embeds Bootstrap CSS #}
+{#% bootstrap_javascript %#}  {# Embeds Bootstrap JS #}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>firstapp</title>
+	<link rel="icon" type="image/x-icon" href="{% static '/images/logo_new.png' %}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+	<script src="https://kit.fontawesome.com/5154dea6e5.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	{% include 'app/navbar.html' %}
+  <main>
+	<div class="container h-50">
+        <div class="row h-100 justify-content-center align-items-center">
+            <span style="text-align: center;">
+                <h3>Meldung wurde an das Labor gesendet</h3>
+                <a href="/app/" class="btn btn-outline-warning btn-lg">eine weitere Abholung melden?</a>
+            </span>
+        </div>	
+    </div>	
+  </main>
+{% include 'app/footer.html' %}
+</body>
+</html>
+<!--
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+
+<div class="xxx">
+
+</div>
+-->

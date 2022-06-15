@@ -1,0 +1,28 @@
+{%  extends 'app/main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+	table th td {
+	   text-align: center; 
+	}
+	.xxx {
+	   margin: auto;
+	   width: 30% !important; 
+	}
+	</style>
+<br>
+<form action="" method="post" class="xxx">
+	{% csrf_token %}
+	<div class="border" style="padding-left:40%">{{ form.msg_study|as_crispy_field }}</div>
+	<br>
+	<div class="border" style="padding-left:40%">
+	{{ form.msg_blood|as_crispy_field }}
+	{{ form.msg_stool|as_crispy_field }}
+	{{ form.msg_urin|as_crispy_field }}
+	</div>
+	<br>
+	<div class="border" style="padding-left:40%">{{ form.msg_room|as_crispy_field }}</div>
+	<br>
+	<div style="padding-left:40%"><button class="btn btn-outline-success" type="submit">Senden</button></div>
+</form>
+{% endblock %}

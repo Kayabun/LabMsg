@@ -1,0 +1,85 @@
+{% load static %}
+{% load bootstrap4 %}       {# imports bootstrap3 #}
+{% bootstrap_css %}         {# Embeds Bootstrap CSS #}
+{#% bootstrap_javascript %#}  {# Embeds Bootstrap JS #}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="30">
+	<title><<LabMsg>></title>
+  <link rel="shortcut icon" href="{% static 'favicon/favicon.png' %}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+	<script src="https://kit.fontawesome.com/5154dea6e5.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  {% load static %}
+
+  <nav class="navbar sticky-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'images/blood-sample.png' %}" height="50px" style="padding-right:50px;"></a>
+    <h3 class="text-white "> Message to Lab</h3>
+    <a href="/app/" class="btn btn-outline-success btn-sm">add</a>
+  </nav>
+
+  <main>
+	<div class="container-fluid justify-content-center">
+
+<style>
+table th td {
+   text-align: center; 
+}
+.table {
+   margin: auto;
+   width: 100% !important; 
+}
+</style>
+
+<br>
+{% if total_msgs == 0 %}
+	<p style="text-align:center;padding-top:50px;font-size:24px;" ><i class="fas fa-times" aria-hidden="true" style="color:red;"></i> Heute wurde noch keine Bioprobe gemeldet. <i class="fas fa-times" aria-hidden="true" style="color:red;"></i></p>
+{% else %}
+<table class="table" id="timediv">
+    <thead class="thead-dark">
+      <tr>
+        <!--<th scope="col">#</th>-->
+        <th scope="col">Studie</th>
+        <th scope="col">Blut</th>
+        <th scope="col">Stuhl</th>
+        <th scope="col">Urin</th>
+        <th scope="col">Raum</th>
+        <th scope="col">Zeitstempel</th>
+        <th scope="col">
+          <a href="{% url 'mark_all_event' %}" class="btn btn-success" onclick="return confirm('Wollen Sie wirklich alle Einträge markieren?')"><i class="fa fa-reply-all"></i></a>
+          <a href="{% url 'delete_all_event' %}" class="btn btn-danger" onclick="return confirm('Wollen Sie wirklich alle Einträge löschen?')"><i class="fa fa-ban"></i></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in msg_view %}
+        {% if item.msg_mark == True %}<tr style="background-image: linear-gradient(to left, rgba(255, 0, 0, 0), rgb(197, 250, 157))">{% else %}<tr style="background-image: linear-gradient(to left, rgba(255,0,0,0), rgb(254, 107, 107))">{% endif %}
+        <!--<th scope="row">{{ item.id }}</th>-->
+        <td>{{ item.msg_study }}</td>
+        <td>{% if item.msg_blood == True %}<i class="fas fa-check" aria-hidden="true" style="color:green;font-size: x-large;"></i>{% else %}<i class="fas fa-times" aria-hidden="true" style="color:red;font-size: x-large"></i>{% endif %}</td>
+        <td>{% if item.msg_stool == True %}<i class="fas fa-check" aria-hidden="true" style="color:green;font-size: x-large;"></i>{% else %}<i class="fas fa-times" aria-hidden="true" style="color:red;font-size: x-large;"></i>{% endif %}</td>
+        <td>{% if item.msg_urin == True %}<i class="fas fa-check" aria-hidden="true" style="color:green;font-size: x-large;"></i>{% else %}<i class="fas fa-times" aria-hidden="true" style="color:red;font-size: x-large;"></i>{% endif %}</td>
+        <td>{{ item.msg_room }}</td>
+        <td>{{ item.msg_date|date:"d.m.Y H:i" }}</td>
+        <td>
+          {% if item.msg_mark == False %}<a href="{% url 'mark_event' item.id %}" class="btn btn-success"><i class="fa fa-check-circle-o"></i></a>{% else %}<a href="{% url 'mark_event_x' item.id %}" class="btn btn-warning"><i class="fa fa-times-circle-o"></i></a>{% endif %}
+          <a href="{% url 'delete_event' item.id %}" class="btn btn-danger" onclick="return confirm('Wollen Sie den Eintrag wirklich löschen?')"><i class="fa fa-trash"></i></a>
+      </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+</main>
+{% include 'app/footer.html' %}
+</body>
+</html>
